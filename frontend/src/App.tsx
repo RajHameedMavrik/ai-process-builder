@@ -8,6 +8,7 @@ function App() {
 
 // Updated handleGenerate function in App.tsx
 const handleGenerate = async () => {
+  setIsLoading(true);
   try {
     const response = await fetch('http://localhost:5000/generate-diagram', {
       method: 'POST',
@@ -36,7 +37,6 @@ const handleGenerate = async () => {
     console.error('API Error:', error);
   }
 
-    setIsLoading(true);
   try {
     // ... existing code ...
   } finally {
