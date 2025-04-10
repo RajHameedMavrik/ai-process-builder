@@ -13,7 +13,12 @@ interface DiagramCanvasProps {
   export default function DiagramCanvas({ data }: DiagramCanvasProps) {
     const [nodes, setNodes, onNodesChange] = useNodesState<Node<{ label: string }>>(data?.nodes || []);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>(data?.edges || []);
-
+    const nodeStyle = {
+      background: '#6366f1',  // Indigo-600
+      color: 'white',
+      padding: 10,
+      borderRadius: 8,
+    };
    // useEffect to handle data updates
     useEffect(() => {
       if (data) {
@@ -30,6 +35,9 @@ interface DiagramCanvasProps {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         fitView // Automatically zoom to fit nodes
+        nodeTypes={{ default: ({ data }) => (
+          <div style={nodeStyle}>{data.label}</div>
+        )}}
       >
         <Controls />
       </ReactFlow>

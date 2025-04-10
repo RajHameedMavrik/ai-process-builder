@@ -44,6 +44,15 @@ const handleGenerate = async () => {
   }
 };
 
+const saveDiagram = () => {
+  localStorage.setItem('diagram', JSON.stringify(diagramData));
+};
+
+const loadDiagram = () => {
+  const saved = localStorage.getItem('diagram');
+  if (saved) setDiagramData(JSON.parse(saved));
+};
+
 // Update button
 <button onClick={handleGenerate} disabled={isLoading}>
   {isLoading ? 'Generating...' : 'Generate Diagram'}
