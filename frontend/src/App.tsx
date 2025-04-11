@@ -10,7 +10,7 @@ function App() {
 const handleGenerate = async () => {
   setIsLoading(true);
   try {
-    const response = await fetch('https://ai-process-builder-env.eba-umgfzmqk.us-east-1.elasticbeanstalk.com/generate-diagram', {
+    const response = await fetch('https://api.elvengen.ai/generate-diagram', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ description: inputText }),
@@ -26,6 +26,11 @@ const handleGenerate = async () => {
     if (!data?.nodes || !data?.edges) {
       throw new Error('Invalid diagram data received from server');
     }
+
+    if (!data?.nodes?.length || !data?.edges?.length) {
+      return <div>No diagram data available</div>;
+    }
+    
 
     setDiagramData(data);
   } catch (error) {
@@ -54,9 +59,16 @@ const loadDiagram = () => {
 };
 
 // Update button
-<button onClick={handleGenerate} disabled={isLoading}>
+<button onClick={handleGenerate} disabled={isLoading || !inputText.trim()}>
   {isLoading ? 'Generating...' : 'Generate Diagram'}
 </button>
+
+if (inputText.trim().length < 10) {
+  alert('Please provide a more detailed description.');
+  return;
+}
+
+
 
   return (
     <div className="App">
@@ -69,6 +81,9 @@ const loadDiagram = () => {
           style={{ width: '400px', marginRight: '10px' }}
         />
         <button onClick={handleGenerate}>Generate Diagram</button>
+        <button onClick={saveDiagram}>Save Diagram</button>
+        <button onClick={loadDiagram}>Load Diagram</button>
+
       </div>
       <DiagramCanvas data={diagramData} />
     </div>
