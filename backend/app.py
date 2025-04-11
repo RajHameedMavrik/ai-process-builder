@@ -5,7 +5,7 @@ import os
 from dotenv import load_dotenv
 import json
 
-load_dotenv(dotenv_path="/Users/raj/ai-process-builder/backend/.env")
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
@@ -77,7 +77,6 @@ def generate_diagram():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
-if __name__ == '__main__':
-    print("🔥 Starting Flask server...")
-    print(f"OPENAI_API_KEY: {os.getenv('OPENAI_API_KEY')}")
-    app.run(port=5000, debug=False)
+@app.route('/')
+def health_check():
+    return jsonify({"status": "healthy"}), 200
