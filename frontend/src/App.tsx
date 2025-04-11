@@ -10,7 +10,7 @@ function App() {
 const handleGenerate = async () => {
   setIsLoading(true);
   try {
-    const response = await fetch('http://ai-process-builder-env.eba-umgfzmqk.us-east-1.elasticbeanstalk.com/generate-diagram', {
+    const response = await fetch('https://ai-process-builder-env.eba-umgfzmqk.us-east-1.elasticbeanstalk.com/generate-diagram', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ description: inputText }),

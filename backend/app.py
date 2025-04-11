@@ -8,7 +8,7 @@ import json
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/generate-diagram": {"origins": "https://ai-process-builder-*.vercel.app"}})
 
 
 # Initialize OpenAI client
@@ -77,6 +77,6 @@ def generate_diagram():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
-@app.route('/')
+@app.route('/health')
 def health_check():
     return jsonify({"status": "healthy"}), 200
