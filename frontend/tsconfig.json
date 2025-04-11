@@ -4,12 +4,15 @@
     "lib": [
       "dom",
       "dom.iterable",
+      "es2015",
       "esnext"
     ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "types": ["react", "jest", "react-dom"],
+    "typeRoots": ["./node_modules/@types"],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -18,7 +21,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "noImplicitReturns": true
   },
   "include": [
     "src"
