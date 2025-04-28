@@ -8,14 +8,18 @@ import json
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/generate-diagram": {"origins": "https://ai-process-builder-*.vercel.app"}})
+CORS(app, resources={
+    r"/generate-diagram": {
+        "origins": ["http://localhost:3000", "https://ai-process-builder.vercel.app"]
+        }
+    })
 
 
 # Initialize OpenAI client
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
-@app.route('/generate-diagram', methods=['POST'])
+@app.route('/generate-diagram', methods=['POST', 'OPTIONS'])
 def generate_diagram():
     try:
         # Get user input
@@ -73,8 +77,15 @@ def generate_diagram():
         # ===== END OF ADDED SECTION =====
 
         return jsonify(diagram_data)
+        
+        return jsonify(diagram_data), 200, {
+            'Access-Control-Allow-Origin': 'https://ai-process-builder-*.vercel.app'
+        }
 
     except Exception as e:
+        return jsonify({"error": str(e)}), 500, {
+            'Access-Control-Allow-Origin': 'https://ai-process-builder-*.vercel.app'
+        }
         return jsonify({"error": str(e)}), 500
     
 @app.route('/health')
